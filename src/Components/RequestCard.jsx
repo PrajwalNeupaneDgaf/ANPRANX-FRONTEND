@@ -18,10 +18,10 @@ const RequestCard = () => {
         </div>
       </div>
       <div className="flex gap-2 px-4 items-center">
-        <button className="w-[12rem] rounded py-1 md:py-2 bg-gray-700 hover:bg-gray-800 text-yellow-100 font-semibold cursor-pointer">
+        <button className="w-[12rem] rounded py-1 md:py-2 bg-gray-700 hover:bg-gray-800 text-sm text-yellow-100 md:font-semibold cursor-pointer">
           Reject
         </button>
-        <button className="w-[12rem] rounded py-1 md:py-2 text-gray-100 bg-yellow-700 hover:bg-yellow-800 font-semibold cursor-pointer">
+        <button className="w-[12rem] rounded py-1 md:py-2 text-gray-100 bg-yellow-700 text-sm hover:bg-yellow-800 md:font-semibold cursor-pointer">
           Accept
         </button>
       </div>
