@@ -1,8 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ChatFriendsCard = () => {
+  const navigate = useNavigate()
   return (
-    <div className="cursor-pointer flex relative flex-row  justify-between gap-2 p-2 my-2 border border-solid border-gray-200 rounded-xl">
+    <div onClick={()=>{
+      navigate(`/messages/123`)
+    }} className="cursor-pointer flex relative flex-row  justify-between gap-2 p-2 my-2 border border-solid border-gray-200 rounded-xl">
       <div className="flex gap-1 md:gap-2 items-center h-full ">
         <div className="flex h-full justify-center items-center ">
           <img

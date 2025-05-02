@@ -22,6 +22,12 @@ const Navbar = () => {
 
   //input value Search
   const [SearchValue, setSearchValue] = useState("");
+
+  const Search = ()=>{
+  if(SearchValue){
+    navigate(`/search=/${SearchValue}`)
+  }
+  }
   return (
     <div className="z-30 fixed min-h-[4rem] top-0 left-0 right-0 py-2 px-3 shadow-sm gap-5 bg-gray-50 md:px-8 flex lg:flex-row flex-col justify-between lg:items-center ">
       <nav className="flex md:gap-3 gap-2 items-center w-full">
@@ -35,6 +41,11 @@ const Navbar = () => {
         </div>
         <div className=" flex  justify-center items-center border-solid border bg-gray-50 border-[#e2f7b2] rounded-md lg:w-[20rem] w-full">
           <input
+            onKeyDown={(e)=>{
+              if(e.key=="Enter"){
+                Search()
+              }
+            }}
             value={SearchValue}
             onChange={(e) => {
               setSearchValue(e.target.value);
@@ -46,7 +57,7 @@ const Navbar = () => {
           {SearchValue && <IoClose onClick={()=>{
             setSearchValue('')
           }} className="cursor-pointer" size={20} />}
-          <IoSearch size={20} className="cursor-pointer mx-1" />
+          <IoSearch onClick={Search} size={20} className="cursor-pointer mx-1" />
         </div>
         <div
           onClick={() => {

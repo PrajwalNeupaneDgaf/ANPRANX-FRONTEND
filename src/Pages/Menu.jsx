@@ -4,16 +4,21 @@ import { IoChevronForward, IoLogOut, IoLogOutOutline } from "react-icons/io5";
 import Dialog from "../Components/Dialog";
 import { useData } from "../Context/DataContext";
 import MenuOptions from "../Components/MenuOptions";
+import { useNavigate } from "react-router-dom";
 
 const Menu = () => {
   const [Display, setDisplay] = useState(false);
+
+  const navigate = useNavigate()
 
   const { showToast } = useData();
   return (
     <Layout bg="bg-gray-100">
       <div className="my-1 md:my-2 bg-white shadow-xl rounded-xl p-3">
         <div className="flex gap-1 md:gap-2 justify-between items-center h-full ">
-          <div className="flex gap-1 md:gap-2 items-center h-full">
+          <div onClick={()=>{
+            navigate(`/profile/609`)
+          }} className="flex gap-1 md:gap-2 items-center h-full">
             <div className="flex h-full justify-center items-center ">
               <img
                 src="https://scontent.fbdp2-1.fna.fbcdn.net/v/t39.30808-6/471270892_1735936640313368_6666737061056396940_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFpvDfxpsRuC588YkiFOBLFVBEaOWBHz8JUERo5YEfPwga2ALnm1TvrTyJJcPD3PwuFTxNvGw9vcXXZVvb3nfDt&_nc_ohc=D-_nxyzdcYQQ7kNvwEMEWQy&_nc_oc=AdlTvXnTGxYk9Hy3tvDEx4i7aIw_pXf5H9sCNIDi3dkQq-VK3oCD4rLRzXhnnwHKcz__9H7usyKWWFKstCvvcWdV&_nc_zt=23&_nc_ht=scontent.fbdp2-1.fna&_nc_gid=wS5q-W7F0D1IieoZQlBy1A&oh=00_AfEEpC7zgrkPOUctEBAyVCIwTU_qaz0BBGIlc_19EoWITg&oe=6802ACE7"

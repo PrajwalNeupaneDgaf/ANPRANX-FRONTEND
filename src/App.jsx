@@ -10,6 +10,9 @@ import Menu from './Pages/Menu.jsx';
 import Login from './Pages/Unauthorized/Login.jsx';
 import Register from './Pages/Unauthorized/Register.jsx';
 import ForgetPassword from './Pages/Unauthorized/ForgetPassword.jsx';
+import Profile from './Pages/Profile.jsx';
+import Search from './Pages/Search.jsx';
+import MessagesPersonal from './Pages/MessagesPersonal.jsx';
 
 const App = () => {
   return (
@@ -20,8 +23,11 @@ const App = () => {
             <Route path='/' element={<Home/>}/>
             <Route path='/requests' element={<Requests/>}/>
             <Route path='/messages' element={<Messages/>}/>
+            <Route path='/messages/:is' element={<MessagesPersonal/>}/>
             <Route path='/notifications' element={<Notification/>}/>
             <Route path='/menu' element={<Menu/>}/>
+            <Route path='/profile/:id' element={<Profile/>}/>
+            <Route path='/search=/:data' element={<Search/>}/>
 
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
