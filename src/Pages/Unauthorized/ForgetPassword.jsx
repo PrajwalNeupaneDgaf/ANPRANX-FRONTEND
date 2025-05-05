@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import LayoutUnAuthorized from "./LayoutUnAuthorized";
 
 const ForgetPassword = () => {
   return (
-    <div>ForgetPassword</div>
-  )
-}
+    <LayoutUnAuthorized>
+      <div>ForgetPassword</div>
+    </LayoutUnAuthorized>
+  );
+};
 
-export default ForgetPassword
+export default ForgetPassword;

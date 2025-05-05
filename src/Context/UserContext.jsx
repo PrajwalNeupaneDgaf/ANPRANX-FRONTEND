@@ -1,67 +1,46 @@
-import React, { createContext, useCallback, useContext, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useState } from "react";
 import LoadingComponent from "../Components/LoadingComponent";
+import { io, Socket } from 'socket.io-client';
 
 const userContext = createContext();
 
 const UserContext = ({ children }) => {
-  const [Loading, setLoading] = useState(0);
+  const [Loading, setLoading] = useState(false);
 
   //user Authorizations
   const [User, setUser] = useState({});
-  const [IsAuthorized, setIsAuthorized] = useState(true);
-
-  //functions
-
-  //login function
-  const login = useCallback(async ({ data }) => {
-    try {
-    } catch (error) {}
-  }, []);
-
-  //Register
-
-  const register = useCallback(async ({ data }) => {
-    try {
-    } catch (error) {}
-  }, []);
-
-  //Verify the Gmail
-  const verify = useCallback(async ({ data }) => {
-    try {
-    } catch (error) {}
-  }, []);
-
-  //logout
-  const logout = useCallback(({ data }) => {}, []);
+  const [IsAuthorized, setIsAuthorized] = useState(1);
 
 
-  //Manage Profile Functions
+
+  const [Messages, setMessages] = useState([])
+  const [Notifications, setNotifications] = useState([])
+  const [Posts, setPosts] = useState([])
+  const [Requests, setRequests] = useState([])
+  const [SentRequests, setSentRequests] = useState([])
+
+  console.log(import.meta.env.VITE_MODE)
+  //https://anprax-backend.onrender.com
+  const socket = io(import.meta.env.VITE_MODE!=="DEVELOPMENT"?"https://anprax-backend.onrender.com":'http://localhost:5000', {
+    query: {
+      id: '123224' 
+    }
+  });
+
+//   useEffect(() => {
+//     socket?.on("new:user",handleAnotherLogin)
+  
+//     return () => {
+//       socket?.off("new:user",handleAnotherLogin)
+//     }
+//   }, [socket])
+  
+// const handleAnotherLogin = useCallback(({data})=>{
+// alert(data)
+// },[socket])
 
 
-  //Update Profile 
-
-  const updateProfile  = useCallback(async ({ data }) => {
-    try {
-    } catch (error) {}
-  }, []);
-
-
-  //Add profile Pic
-
-  const addProfile = useCallback(async ({ data }) => {
-    try {
-    } catch (error) {}
-  }, []);
-
-  //Add a post
-
-  const addPost = useCallback(async ({ data }) => {
-    try {
-    } catch (error) {}
-  }, []);
-
-  //Messages
-
+ 
   if (Loading) return <LoadingComponent/>
   return (
     <userContext.Provider
@@ -70,7 +49,7 @@ const UserContext = ({ children }) => {
         setUser,
         IsAuthorized,
         setIsAuthorized,
-        login,
+  
       }}
     >
       {children}

@@ -29,7 +29,7 @@ const MenuOptions = () => {
       <div className="border rounded border-solid border-gray-200 px-3 py-7 text-sm md:text-[1em] font-light w-full text-center flex justify-center flex-col gap-5 items-center cursor-pointer my-1 md:my-2">
         <p className="w-full text-center">
           !! Your Email Is Not Verified Verify It For ,Password managing and
-          Many other.!!
+          Many other. Verify to Use it !!
         </p>
         <button className="text-yellow-700 font-semibold select-none cursor-pointer border-solid border-gray-500 p-2 px-6 hover:border rounded">
           Verify Now
@@ -110,7 +110,7 @@ const MenuOptions = () => {
         Display={ShowManagePassword}
       >
         <div className="flex flex-col gap-3">
-          <div className="flex gap-2 flex-col md:flex-row justify-center">
+          <div className="flex gap-2 flex-col md:flex-row md:items-center justify-center">
             <label
               htmlFor="YourPassword"
               className="whitespace-nowrap md:font-semibold text-gray-600"
@@ -128,7 +128,7 @@ const MenuOptions = () => {
               className="border border-solid border-gray-400 rounded-xl p-2 text-sm outline-none w-full"
             />
           </div>
-          <div className="flex gap-2 flex-col md:flex-row">
+          <div className="flex gap-2 flex-col md:flex-row md:items-center ">
             <label
               htmlFor="NewPassword"
               className="whitespace-nowrap md:font-semibold text-gray-600 justify-center"
@@ -156,8 +156,8 @@ const MenuOptions = () => {
         setDisplay={SetShowManageGeneral}
         Display={ShowManageGeneral}
       >
-        <div className="flex flex-col gap-3">
-          <div className="flex gap-2 flex-col md:flex-row justify-center">
+        <div className="flex flex-col gap-3  ">
+          <div className="flex gap-2 flex-col md:flex-row justify-center md:items-center ">
             <label
               htmlFor="YourName"
               className="whitespace-nowrap md:font-semibold text-gray-600"
@@ -206,7 +206,7 @@ const MenuOptions = () => {
         Display={ShowManageEmail}
       >
         <div className="flex flex-col gap-3">
-          <div className="flex gap-2 flex-col md:flex-row justify-center">
+          <div className="flex gap-2 flex-col md:flex-row justify-center md:items-center ">
             <label
               htmlFor="yourEmail"
               className="whitespace-nowrap md:font-semibold text-gray-600"
@@ -236,7 +236,7 @@ const MenuOptions = () => {
         Display={ShowVerifyCode}
       >
         <div className="flex flex-col gap-3">
-          <div className="flex gap-2 flex-col md:flex-row justify-center">
+          <div className="flex gap-2 flex-col md:flex-row justify-center md:items-center ">
             <label
               htmlFor="YourCode"
               className="whitespace-nowrap md:font-semibold text-gray-600"
@@ -258,6 +258,9 @@ const MenuOptions = () => {
           </div>
           <button className="w-full bg-gradient-to-r from-orange-500 to-orange-700 py-2 rounded-2xl font-semibold text-gray-100 cursor-pointer">
             Submit
+          </button>
+          <button className="w-full bg-gradient-to-r from-gray-800 to-gray-700 py-2 rounded-2xl font-semibold text-gray-100 cursor-pointer">
+            Resend Code
           </button>
         </div>
       </SettingOverDisplay>

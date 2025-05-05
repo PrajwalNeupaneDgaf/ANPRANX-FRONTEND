@@ -9,7 +9,7 @@ const Profile = () => {
     const[showPhotos,setShowPhotos] = useState(false)
   return(
   <Layout bg="bg-gray-100">
-   <ProfileComp/>
+   <ProfileComp IsMineProfile={false}/>
    { IsOwnProfile &&
      <HomePost/>
    }

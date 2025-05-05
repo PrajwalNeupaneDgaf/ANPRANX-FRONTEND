@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import Dialog from "./Dialog";
 import { useData } from "../Context/DataContext";
 
-const ProfileComp = ({ IsMineProfile,IsRequested , IsFriend=1 , ManageRequest  }) => {
+const ProfileComp = ({ IsMineProfile,IsRequested=true , IsFriend ,IsRequestReceived, ManageRequest  }) => {
 
    const [showOptions, setshowOptions] = useState(false)
    const [DisplayBlocked, setDisplayBlocked] = useState(false)
@@ -14,6 +14,7 @@ const ProfileComp = ({ IsMineProfile,IsRequested , IsFriend=1 , ManageRequest  }
       <div className="flex justify-center items-center flex-col">
         <div className="rounded-full h-64 w-64 bg-gray-500 border-2 border-solid border-orange-400"></div>
         <h1 className="text-gray-800 font-semibold text-lg md:text-xl mb-3">Prajwal Neupane</h1>
+        <h1 className="text-gray-800 font-semibold text-xs md:text-sm mb-3">@Prajwal_Neupane</h1>
         {!IsMineProfile ? (
           <div className="flex flex-wrap justify-center items-center gap-2">
            {
@@ -39,7 +40,7 @@ const ProfileComp = ({ IsMineProfile,IsRequested , IsFriend=1 , ManageRequest  }
         ) : (
             <div className="flex flex-wrap justify-center items-center gap-2">
             <button className="text-gray-100 bg-gray-800 p-1 cursor-pointer rounded-sm w-[13rem] ">Add Profile</button>
-            <button className="text-gray-100 bg-gradient-to-r from-orange-400 to-orange-600 p-1 cursor-pointer rounded-sm w-[13rem] ">Edit Profile</button>
+            <button className="text-gray-100 bg-gradient-to-r from-orange-400 to-orange-600 p-1 cursor-pointer rounded-sm w-[13rem] ">Remove Profile</button>
           </div>
         )}
       </div>

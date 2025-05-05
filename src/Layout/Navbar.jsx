@@ -29,7 +29,7 @@ const Navbar = () => {
   }
   }
   return (
-    <div className="z-30 fixed min-h-[4rem] top-0 left-0 right-0 py-2 px-3 shadow-sm gap-5 bg-gray-50 md:px-8 flex lg:flex-row flex-col justify-between lg:items-center ">
+    <div className="z-30 fixed min-h-[4rem] top-0 w-full max-w-[120rem] py-2 px-3 shadow-sm gap-5 bg-gray-50 md:px-8 flex lg:flex-row flex-col justify-between lg:items-center ">
       <nav className="flex md:gap-3 gap-2 items-center w-full">
         <div
           onClick={() => {

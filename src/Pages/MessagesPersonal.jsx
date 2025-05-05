@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "../Layout/Layout";
 import { useNavigate } from "react-router-dom";
-import { IoSendSharp } from "react-icons/io5";
+import { IoEllipsisVertical, IoSendSharp } from "react-icons/io5";
 import MessageBar from "../Components/MessageBar";
 
 const MessagesPersonal = () => {
@@ -26,7 +26,7 @@ const MessagesPersonal = () => {
   },[Messages])
   return (
     <Layout bg="bg-gray-100">
-      <div className="bg-white p-3 rounded-lg shadow-xl mt-2 h-[83dvh] md:h-[89dvh] overflow-hidden">
+      <div className="bg-white p-3 rounded-lg shadow-xl mt-2 h-[83dvh] md:h-[89dvh] overflow-hidden relative">
         <div className="flex justify-between items-center ">
           <div className="flex gap-1 items-center">
             <div
@@ -41,6 +41,9 @@ const MessagesPersonal = () => {
               </h2>
               <p className="text-xs font-thin text-gray-700">Active Now</p>
             </div>
+          </div>
+          <div>
+            <IoEllipsisVertical className="cursor-pointer"/>
           </div>
         </div>
         <hr className="mt-3 border border-solid border-gray-400" />
@@ -70,6 +73,7 @@ const MessagesPersonal = () => {
             }}
             type="text"
             value={Message}
+            placeholder="Your Message"
             onChange={(e) => {
               setMessage(e.target.value);
             }}
