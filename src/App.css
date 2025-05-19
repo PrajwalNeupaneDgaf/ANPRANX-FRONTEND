@@ -1,3 +1,21 @@
 .noScrollBar::-webkit-scrollbar{
     display: none;
 }
+
+div[notify] {
+    position: relative;
+  }
+  
+  div[notify]::after {
+    content: attr(notify); /* or use "''" for a dot */
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    border-radius: 50%;
+    line-height: 1;
+  }
+  

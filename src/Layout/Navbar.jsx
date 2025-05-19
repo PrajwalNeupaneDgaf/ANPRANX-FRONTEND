@@ -14,6 +14,7 @@ import {
   IoSearch,
 } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../Context/UserContext";
 
 const Navbar = () => {
   const pathName = location.pathname; //fetching pathname
@@ -28,6 +29,8 @@ const Navbar = () => {
     navigate(`/search=/${SearchValue}`)
   }
   }
+
+  const {User,Requests} = useUser()
   return (
     <div className="z-30 fixed min-h-[4rem] top-0 w-full max-w-[120rem] py-2 px-3 shadow-sm gap-5 bg-gray-50 md:px-8 flex lg:flex-row flex-col justify-between lg:items-center ">
       <nav className="flex md:gap-3 gap-2 items-center w-full">
@@ -99,10 +102,11 @@ const Navbar = () => {
               <IoHomeOutline size={20} />
             )}
           </span>
-          <span className="hidden sm:block"> Home</span>
+          <span  className="hidden sm:block"> Home</span>
         </div>
 
         <div
+          notify={Requests?.length>0?Requests.length:null}
           onClick={() => {
             navigate("/requests");
           }}
@@ -119,7 +123,7 @@ const Navbar = () => {
               <IoPersonAddOutline size={18} />
             )}
           </span>
-          <span className="hidden sm:block"> Request</span>
+          <span  className="hidden sm:block"> Request</span>
         </div>
         <div
           onClick={() => {
@@ -141,6 +145,7 @@ const Navbar = () => {
           <span className="hidden sm:block"> Message</span>
         </div>
         <div
+          notify={User?.Notification?.length}
           onClick={() => {
             navigate("/notifications");
           }}

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LayoutUnAuthorized from "./LayoutUnAuthorized";
+import instance from "../../axios";
+import { useUser } from "../../Context/UserContext";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -18,8 +20,29 @@ const Register = () => {
 
   const [Message, setMessage] = useState("");
 
+  const [Loading, setLoading] = useState(false)
+
+  const {setIsAuthorized} = useUser()
+
   const Register = () => {
-    setMessage("Error Check");
+    if(!Name || !UserName || !Password){
+      setMessage("Fill The Form Properly")
+      return 
+    }
+    setLoading(true)
+    instance.post('/user/register',{
+      Name:Name,
+      UserName:UserName,
+      Password,
+      Gender
+    }).then(res=>{
+      setIsAuthorized(true)
+      localStorage.setItem("Token",res.data.Token)
+    }).catch((err)=>{
+      setMessage(err.response.data.message || "Something Went Wrong")
+    }).finally(()=>{
+      setLoading(false)
+    })
   };
 
   return (
@@ -122,10 +145,11 @@ const Register = () => {
           </div>
           <div>
             <button
+              disabled={Loading}
               onClick={Register}
               className="w-full p-2 bg-gradient-to-l from-orange-500 to-orange-700 font-semibold text-white rounded mt-1 cursor-pointer"
             >
-              Register
+               {Loading?"Wait...":" Register"}
             </button>
           </div>
           {Message && (

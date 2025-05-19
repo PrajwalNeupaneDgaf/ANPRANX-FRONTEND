@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   IoAccessibility,
   IoAdd,
@@ -8,6 +8,9 @@ import {
 } from "react-icons/io5";
 import { useData } from "../Context/DataContext";
 import { useNavigate } from "react-router-dom";
+import { useUser } from "../Context/UserContext";
+import instance from "../axios";
+import toast from "react-hot-toast";
 
 const HomePost = () => {
   const { showToast } = useData();
@@ -15,34 +18,70 @@ const HomePost = () => {
   const [Image, setImage] = useState(null);
   const [IsPosting, setIsPosting] = useState(false);
 
-  const navigate = useNavigate()
+  const [ImageUrl, setImageUrl] = useState(null);
+
+  const navigate = useNavigate();
+
+  const { User,CompressedImage } = useUser();
+
+  const ImageRef = useRef();
 
   //functions below are dummy
-  const PostThePost = () => {
+  const PostThePost = async() => {
+    if (!Image && !Post) {
+      return;
+    }
     setIsPosting(true);
+    const formData = new FormData();
 
-    setTimeout(() => {
-      showToast({
-        type: "success",
-        message: "You Posted New Post",
+    if (Image) {
+      const reqImage = await CompressedImage(Image)
+      formData.append("image", reqImage);
+    }
+    if (Post) {
+      formData.append("Text", Post);
+    }
+
+    instance
+      .post("/post/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        toast("Post Added SuccesFully");
+        setImage(null)
+        setImageUrl(null)
+        setPost('')
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message || "Post Failed");
+      })
+      .finally(() => {
+        setIsPosting(false);
       });
-      setIsPosting(false);
-    }, 2000);
   };
   return (
     <div className="w-full md:min-h-[18rem] transition-all duration-1000 p-4 mb-6 min-h-[12rem] bg-white rounded-2xl shadow-md md:shadow-lg">
       <div className="flex justify-between">
-        <div onClick={()=>{
-          navigate(`/profile/200`)
-        }} className="w-full flex gap-1 md:gap-2 items-center">
-          <img
-            src="https://scontent.fbdp2-1.fna.fbcdn.net/v/t39.30808-6/471270892_1735936640313368_6666737061056396940_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFpvDfxpsRuC588YkiFOBLFVBEaOWBHz8JUERo5YEfPwga2ALnm1TvrTyJJcPD3PwuFTxNvGw9vcXXZVvb3nfDt&_nc_ohc=D-_nxyzdcYQQ7kNvwEMEWQy&_nc_oc=AdlTvXnTGxYk9Hy3tvDEx4i7aIw_pXf5H9sCNIDi3dkQq-VK3oCD4rLRzXhnnwHKcz__9H7usyKWWFKstCvvcWdV&_nc_zt=23&_nc_ht=scontent.fbdp2-1.fna&_nc_gid=wS5q-W7F0D1IieoZQlBy1A&oh=00_AfEEpC7zgrkPOUctEBAyVCIwTU_qaz0BBGIlc_19EoWITg&oe=6802ACE7"
-            className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gray-400 object-cover"
-            alt="Error"
-          />
+        <div
+          onClick={() => {
+            navigate(`/profile/${User?._id}`);
+          }}
+          className="w-full flex gap-1 md:gap-2 items-center"
+        >
+          {User.Profile ? (
+            <img
+              src={User?.Profile}
+              className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-gray-400 object-cover"
+              alt={User?.Name}
+            />
+          ) : (
+            <div className="bg-conic-210 from-orange-300  via-orange-700 to-orange-800 rounded-full w-10 h-10 md:w-14 md:h-14 cursor-pointer"></div>
+          )}
 
           <strong className="font-semibold text-sm cursor-pointer hover:underline select-none pb-3 md:text-lg text-yellow-700">
-            Prajwal Neupane
+            {User?.Name}
           </strong>
         </div>
 
@@ -52,6 +91,8 @@ const HomePost = () => {
             <button
               onClick={() => {
                 setImage(null);
+                setImageUrl(null)
+                ImageRef.current.value = null
               }}
               className=" text-xs md:text-sm flex justify-center items-center gap-1 px-3 py-1 cursor-pointer text-yellow-500 hover:text-red-600 transition-all duration-300"
             >
@@ -60,7 +101,7 @@ const HomePost = () => {
           ) : (
             <button
               onClick={() => {
-                setImage("apple");
+                ImageRef.current.click();
               }}
               className="flex text-yellow-800 text-xs md:text-sm justify-center items-center cursor-pointer font-semibold"
             >
@@ -93,9 +134,23 @@ const HomePost = () => {
           <span>{IsPosting ? "Posting" : "Post"}</span>
         </button>
       </div>
-      {Image && (
+      <input
+        ref={ImageRef}
+        type="file"
+        accept="image/*"
+        onChange={(e) => {
+          const file = e.target.files[0];
+          setImage(file); // save the file
+          setImageUrl(URL.createObjectURL(file)); // create preview URL
+        }}
+        className="hidden"
+      />
+      {Image && ImageUrl && (
         <div className="flex justify-center flex-col items-start">
-          <div className="w-36 h-48 rounded-xl bg-gray-200"></div>
+          <img
+            src={ImageUrl}
+            className="w-36 h-48 rounded-xl bg-gray-200"
+          ></img>
         </div>
       )}
     </div>

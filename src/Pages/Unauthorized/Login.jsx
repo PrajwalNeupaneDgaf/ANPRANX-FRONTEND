@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LayoutUnAuthorized from "./LayoutUnAuthorized";
+import { useUser } from "../../Context/UserContext";
+import instance from "../../axios";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,6 +12,47 @@ const Login = () => {
   const [Password, setPassword] = useState("");
   const [Message, setMessage] = useState("");
   const [Status, setStatus] = useState(false); //true is not Error False is Error
+
+  const [Loading, setLoading] = useState(false)
+
+  const {setIsAuthorized} = useUser()
+
+  const Login = () => {
+    if(!UserName || !Password){
+      setMessage("Fill The Form Properly")
+      return 
+    }
+    setLoading(true)
+    instance.post('/user/login',{
+      UserName:UserName,
+      Password,
+    }).then(res=>{
+      setIsAuthorized(true)
+      localStorage.setItem("Token",res.data.Token)
+    }).catch((err)=>{
+      setStatus(false)
+      setMessage(err.response.data.message || "Something Went Wrong")
+    }).finally(()=>{
+      setLoading(false)
+    })
+  };
+const [LoadingForgot, setLoadingForgot] = useState(false)
+  const handleForgotPassword = async()=>{
+    if(!UserName){
+      toast.error("UserName Required")
+    }
+    if(LoadingForgot){
+      return
+    }
+    try {
+     const data =  await instance.post('/user/forgot-password',{UserName:UserName})
+      setStatus(true)
+      setMessage(data.data.message || "Sent Link in Your Gmail")
+    } catch (error) {
+      setStatus(false)
+      setMessage(error.response.data.message || "Something Went Wrong")
+    }
+  }
 
   return (
     <LayoutUnAuthorized>
@@ -63,17 +107,18 @@ const Login = () => {
               className="outline-none border border-solid border-gray-500 p-1 rounded-lg text-sm md:text-lg"
             />
           </div>
-          <div className="pt-1 font-semibold select-none cursor-pointer hover:underline text-orange-800">
+          <div onClick={handleForgotPassword} className="pt-1 font-semibold select-none cursor-pointer hover:underline text-orange-800">
             Forget Password?
           </div>
           <div>
             <button
+              disabled={Loading}
               onClick={() => {
-                setMessage("This is New Error");
+                Login()
               }}
               className="w-full p-2 bg-gradient-to-l from-orange-500 to-orange-700 font-semibold text-white rounded mt-1 cursor-pointer"
             >
-              Login
+             {Loading?"Wait...":" Login"}
             </button>
           </div>
           <div
